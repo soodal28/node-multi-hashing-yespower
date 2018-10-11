@@ -10,8 +10,8 @@ extern "C" {
     #include "quark.h"
     #include "scryptjane.h"
     #include "scryptn.h"
-    #include "yescrypt/yescrypt.h"
-    #include "yescrypt/sha256.h"
+    #include "yespower/sha256.h"
+    #include "yespower/yewpower.h"
     #include "skein.h"
     #include "x11.h"
     #include "Lyra2RE.h"
@@ -57,7 +57,7 @@ void quark(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     quark_hash(input, output, input_len);
@@ -139,17 +139,17 @@ void scrypt(const FunctionCallbackInfo<Value>& args) {
 
    if(!Buffer::HasInstance(target))
        return except("Argument should be a buffer object.");
-    
+
    Local<Number> numn = args[1]->ToNumber(isolate);
    unsigned int nValue = numn->Value();
    Local<Number> numr = args[2]->ToNumber(isolate);
    unsigned int rValue = numr->Value();
-   
+
    char * input = Buffer::Data(target);
    char* output = new char[32];
 
    uint32_t input_len = Buffer::Length(target);
-   
+
    scrypt_N_R_1_256(input, output, nValue, rValue, input_len);
 
    Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
@@ -221,7 +221,7 @@ void scryptjane(const FunctionCallbackInfo<Value>& args) {
     args.GetReturnValue().Set(buff);
 }
 
-void yescrypt(const FunctionCallbackInfo<Value>& args) {
+void yespower(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
 
     if (args.Length() < 1)
@@ -231,13 +231,123 @@ void yescrypt(const FunctionCallbackInfo<Value>& args) {
 
    if(!Buffer::HasInstance(target))
        return except("Argument should be a buffer object.");
-    
-   
+
+
    char * input = Buffer::Data(target);
    char* output = new char[32];
 
-   
-   yescrypt_hash(input, output);
+
+   yespower_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_0_5_R8(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_0_5_R8_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_0_5_R8G(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_0_5_R8G_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_0_5_R16(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_0_5_R16_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_0_5_R24(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_0_5_R24_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_0_5_R32(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_0_5_R32_hash(input, output);
 
    Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
    args.GetReturnValue().Set(buff);
@@ -301,7 +411,7 @@ void skein(const FunctionCallbackInfo<Value>& args) {
     char* output = new char[32];
 
     uint32_t input_len = Buffer::Length(target);
-    
+
     skein_hash(input, output, input_len);
 
     Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
@@ -322,7 +432,7 @@ void groestl(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     groestl_hash(input, output, input_len);
@@ -345,7 +455,7 @@ void groestlmyriad(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     groestlmyriad_hash(input, output, input_len);
@@ -368,7 +478,7 @@ void blake(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     blake_hash(input, output, input_len);
@@ -391,7 +501,7 @@ void fugue(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     fugue_hash(input, output, input_len);
@@ -414,7 +524,7 @@ void qubit(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     qubit_hash(input, output, input_len);
@@ -437,7 +547,7 @@ void hefty1(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     hefty1_hash(input, output, input_len);
@@ -460,7 +570,7 @@ void shavite3(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     shavite3_hash(input, output, input_len);
@@ -476,7 +586,7 @@ void cryptonight(const FunctionCallbackInfo<Value>& args) {
 
     if (args.Length() < 1)
         return except("You must provide one argument.");
-    
+
     if (args.Length() >= 2) {
         if(!args[1]->IsBoolean())
             return except("Argument 2 should be a boolean");
@@ -490,7 +600,7 @@ void cryptonight(const FunctionCallbackInfo<Value>& args) {
 
     char * input = Buffer::Data(target);
     char* output = new char[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     if(fast)
@@ -655,7 +765,12 @@ void init(Handle<Object> exports) {
     NODE_SET_METHOD(exports, "scrypt", scrypt);
     NODE_SET_METHOD(exports, "scryptn", scryptn);
     NODE_SET_METHOD(exports, "scryptjane", scryptjane);
-    NODE_SET_METHOD(exports, "yescrypt", yescrypt);
+    NODE_SET_METHOD(exports, "yespower_0_5_R8", yespower_0_5_R8);
+    NODE_SET_METHOD(exports, "yespower_0_5_R8G", yespower_0_5_R8G);
+    NODE_SET_METHOD(exports, "yespower_0_5_R16", yespower_0_5_R16);
+    NODE_SET_METHOD(exports, "yespower_0_5_R24", yespower_0_5_R24);
+    NODE_SET_METHOD(exports, "yespower_0_5_R32", yespower_0_5_R32);
+    NODE_SET_METHOD(exports, "yespower", yespower);
     NODE_SET_METHOD(exports, "keccak", keccak);
     NODE_SET_METHOD(exports, "bcrypt", bcrypt);
     NODE_SET_METHOD(exports, "skein", skein);
