@@ -11,7 +11,7 @@ extern "C" {
     #include "scryptjane.h"
     #include "scryptn.h"
     #include "yespower/sha256.h"
-    #include "yespower/yewpower.h"
+    #include "yespower/yespower.h"
     #include "skein.h"
     #include "x11.h"
     #include "Lyra2RE.h"
