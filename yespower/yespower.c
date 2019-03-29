@@ -1,4 +1,6 @@
 /*-
+ * Copyright 2019 Yenten team
+ * Copyright 2018 Cryply team
  * Copyright 2009 Colin Percival
  * Copyright 2013-2018 Alexander Peslyak
  * All rights reserved.
@@ -27,8 +29,9 @@
  */
 
 #include "yespower.h"
+#include "sysendian.h"
 
-// for YesPoWer-0.9/1.0 (Cryply, Bellcoin)
+// for standard yespower (Cryply/CranePay, Bellcoin, Veco)
 void yespower_hash(const char *input, char *output)
 {
         yespower_params_t params = {
@@ -39,6 +42,44 @@ void yespower_hash(const char *input, char *output)
                 .perslen = 0
         };
         yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
+}
+
+// for yespowerR16 (Yenten on and after 30 March 2019)
+void yespowerR16_hash(const char *input, char *output)
+{
+        yespower_params_t params = {
+                .version = YESPOWER_1_0,
+                .N = 4096,
+                .r = 16,
+                .pers = NULL,
+                .perslen = 0
+        };
+        yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
+}
+
+// for yespowerYTN (Yenten automatic algorithm change)
+void yespowerYTN_hash(const char *input, char *output)
+{
+        yespower_params_t old_params = {
+                .version = YESPOWER_0_5,
+                .N = 4096,
+                .r = 16,
+                .pers = "Client Key",
+                .perslen = 10
+        };
+        yespower_params_t new_params = {
+                .version = YESPOWER_1_0,
+                .N = 4096,
+                .r = 16,
+                .pers = NULL,
+                .perslen = 0
+        };
+        uint32_t time = le32dec(&input[68]);
+        if (time > 1553904000) {
+            yespower_tls((const uint8_t *) input, 80, &new_params, (yespower_binary_t *) output);
+        } else {
+            yespower_tls((const uint8_t *) input, 80, &old_params, (yespower_binary_t *) output);
+        }
 }
 
 // for yescryptR8, yespower-0.5_R8 (BitZeny, BitZeny-Plus)
@@ -54,7 +95,7 @@ void yespower_0_5_R8_hash(const char *input, char *output)
         yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
 }
 
-// for yescryptR8G, yespower-0.5_R8G (Koto)
+// for yescryptR8G, yespower-0.5_R8G (Koto before Sapling)
 void yespower_0_5_R8G_hash(const char *input, char *output)
 {
         yespower_params_t params = {
@@ -67,7 +108,7 @@ void yespower_0_5_R8G_hash(const char *input, char *output)
         yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
 }
 
-// for yescryptR16, yespower-0.5_R16 (Yenten)
+// for yescryptR16, yespower-0.5_R16 (Yenten up to 3.0.2)
 void yespower_0_5_R16_hash(const char *input, char *output)
 {
         yespower_params_t params = {

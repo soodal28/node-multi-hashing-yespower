@@ -243,6 +243,50 @@ void yespower(const FunctionCallbackInfo<Value>& args) {
    args.GetReturnValue().Set(buff);
 }
 
+void yespowerR16(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespowerR16_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespowerYTN(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespowerYTN_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
 void yespower_0_5_R8(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
 
@@ -771,6 +815,8 @@ void init(Handle<Object> exports) {
     NODE_SET_METHOD(exports, "yespower_0_5_R24", yespower_0_5_R24);
     NODE_SET_METHOD(exports, "yespower_0_5_R32", yespower_0_5_R32);
     NODE_SET_METHOD(exports, "yespower", yespower);
+    NODE_SET_METHOD(exports, "yespowerR16", yespowerR16);
+    NODE_SET_METHOD(exports, "yespowerYTN", yespowerYTN);
     NODE_SET_METHOD(exports, "keccak", keccak);
     NODE_SET_METHOD(exports, "bcrypt", bcrypt);
     NODE_SET_METHOD(exports, "skein", skein);
