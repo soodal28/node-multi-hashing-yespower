@@ -905,7 +905,7 @@ void init(Handle<Object> exports) {
     NODE_SET_METHOD(exports, "yespower_LTNCG", yespower_LTNCG);
     NODE_SET_METHOD(exports, "yespower_URX", yespower_URX);
     NODE_SET_METHOD(exports, "yespower_Sugar", yespower_Sugar);
-    NODE_SET_METHOD(exports, "yescrypt", yescrypt);
+
    
 	
 	
