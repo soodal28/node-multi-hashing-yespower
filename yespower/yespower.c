@@ -171,17 +171,7 @@ void cpupower_hash(const char *input, char *output)
         };
         yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
 }
-void yespower_URX_hash(const char *input, char *output)
-{
-        yespower_params_t params = {
-                .version = YESPOWER_1_0,
-                .N = 2048,
-                .r = 32,
-                .pers = "UraniumX",
-                .perslen = 8
-        };
-        yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
-}
+
 void yespower_LTNCG_hash(const char *input, char *output)
 {
         yespower_params_t params = {
@@ -192,3 +182,15 @@ void yespower_LTNCG_hash(const char *input, char *output)
                 .perslen = 8
         };
         yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
+        
+ void yespower_Sugar_hash(const char *input, char *output)
+{
+        yespower_params_t params = {
+                .version = YESPOWER_1_0,
+                .N = 2048,
+                .r = 32,
+                .pers = "Satoshi Nakamoto 31/Oct/2008 Proof-of-work is essentially one-CPU-one-vote",
+                .perslen = 74
+        };
+        yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
+}
