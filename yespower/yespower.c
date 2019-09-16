@@ -182,6 +182,9 @@ void yespower_LTNCG_hash(const char *input, char *output)
                 .perslen = 8
         };
         yespower_tls((const uint8_t *) input, 80, &params, (yespower_binary_t *) output);
+  }
+      
+        
         
  void yespower_Sugar_hash(const char *input, char *output)
 {
