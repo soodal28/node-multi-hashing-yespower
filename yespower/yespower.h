@@ -137,4 +137,7 @@ void yespower_0_5_R8G_hash(const char *input, char *output);
 void yespower_0_5_R16_hash(const char *input, char *output);
 void yespower_0_5_R24_hash(const char *input, char *output);
 void yespower_0_5_R32_hash(const char *input, char *output);
-
+void cpupower_hash(const char *input, char *output);
+void yespower_URX_hash(const char *input, char *output);
+void yespower_Sugar_hash(const char *input, char *output);
+void yespower_LTNCG_hash(const char *input, char *output);
