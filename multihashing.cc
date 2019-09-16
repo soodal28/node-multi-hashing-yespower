@@ -397,6 +397,93 @@ void yespower_0_5_R32(const FunctionCallbackInfo<Value>& args) {
    args.GetReturnValue().Set(buff);
 }
 
+void cpupower(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   cpupower_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_URX(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_URX_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
+void yespower_LTNCG(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_LTNCG_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+void yespowerSugar(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return except("Argument should be a buffer object.");
+
+
+   char * input = Buffer::Data(target);
+   char* output = new char[32];
+
+
+   yespower_Sugar_hash(input, output);
+
+   Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
+   args.GetReturnValue().Set(buff);
+}
+
 void keccak(const FunctionCallbackInfo<Value>& args) {
      Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
 
@@ -814,6 +901,16 @@ void init(Handle<Object> exports) {
     NODE_SET_METHOD(exports, "yespower_0_5_R16", yespower_0_5_R16);
     NODE_SET_METHOD(exports, "yespower_0_5_R24", yespower_0_5_R24);
     NODE_SET_METHOD(exports, "yespower_0_5_R32", yespower_0_5_R32);
+    NODE_SET_METHOD(exports, "cpupower", cpupower);
+    NODE_SET_METHOD(exports, "yespower_LTNCG", yespower_LTNCG);
+    NODE_SET_METHOD(exports, "yespower_URX", yespower_URX);
+    NODE_SET_METHOD(exports, "yespower_Sugar", yespower_Sugar);
+    NODE_SET_METHOD(exports, "yescrypt", yescrypt);
+   
+	
+	
+	
+	
     NODE_SET_METHOD(exports, "yespower", yespower);
     NODE_SET_METHOD(exports, "yespowerR16", yespowerR16);
     NODE_SET_METHOD(exports, "yespowerYTN", yespowerYTN);
