@@ -462,7 +462,7 @@ void yespower_LTNCG(const FunctionCallbackInfo<Value>& args) {
    Local<Object> buff = Nan::NewBuffer(output, 32).ToLocalChecked();
    args.GetReturnValue().Set(buff);
 }
-void yespowerSugar(const FunctionCallbackInfo<Value>& args) {
+void yespower_Sugar(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = Isolate::GetCurrent();HandleScope scope(isolate);
 
     if (args.Length() < 1)
